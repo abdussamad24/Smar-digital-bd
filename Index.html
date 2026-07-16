@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>লাইভ AI ওয়ার্কশপ — খালিদ ফারহানের সাথে | ৩১ জুলাই</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Tiro+Bangla&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1116;
+    --panel:#161B22;
+    --panel-2:#1D2430;
+    --line:#2A323F;
+    --paper:#F3EEE3;
+    --amber:#E3A857;
+    --amber-dim:#8A6A38;
+    --signal:#5FE0B7;
+    --text-dim:#9AA4B2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Hind Siliguri', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .num{font-family:'Space Grotesk', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  .ticker{
+    background:var(--amber);
+    color:var(--ink);
+    font-weight:600;
+    font-size:14px;
+    text-align:center;
+    padding:9px 12px;
+    letter-spacing:.2px;
+  }
+
+  .hero{
+    position:relative;
+    padding:64px 20px 56px;
+    max-width:920px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-120px; left:50%;
+    width:600px; height:600px;
+    transform:translateX(-50%);
+    background:radial-gradient(circle, rgba(227,168,87,.14) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    letter-spacing:.5px;
+    color:var(--signal);
+    border:1px solid rgba(95,224,183,.35);
+    padding:6px 14px;
+    border-radius:100px;
+    margin-bottom:28px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--signal);animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  h1{
+    font-size:clamp(32px,6vw,54px);
+    line-height:1.18;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  h1 span{color:var(--amber);}
+  .sub{
+    font-size:clamp(16px,2.4vw,19px);
+    color:var(--text-dim);
+    max-width:620px;
+    margin:0 auto 34px;
+  }
+
+  .cta-btn{
+    display:inline-block;
+    background:var(--amber);
+    color:var(--ink);
+    font-weight:700;
+    font-size:17px;
+    padding:16px 36px;
+    border-radius:8px;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 8px 24px rgba(227,168,87,.25);
+  }
+  .cta-btn:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(227,168,87,.35);}
+  .cta-sub{
+    display:block;
+    font-size:12.5px;
+    color:var(--text-dim);
+    margin-top:12px;
+  }
+
+  .countdown-wrap{
+    max-width:920px;
+    margin:0 auto 8px;
+    padding:0 20px;
+  }
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin:38px auto 0;
+    flex-wrap:wrap;
+  }
+  .cd-box{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 20px;
+    min-width:76px;
+    text-align:center;
+  }
+  .cd-box .n{font-size:28px; font-weight:700; color:var(--paper);}
+  .cd-box .l{font-size:11.5px; color:var(--text-dim); margin-top:4px;}
+
+  .section{
+    max-width:920px;
+    margin:0 auto;
+    padding:70px 20px;
+  }
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--line), transparent);
+    max-width:920px;
+    margin:0 auto;
+  }
+  .instructor-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:36px;
+    display:flex;
+    gap:28px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .instructor-avatar{
+    width:96px; height:96px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--amber), var(--amber-dim));
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Grotesk';
+    font-size:32px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .instructor-text h3{font-size:20px; margin-bottom:6px; color:var(--paper);}
+  .instructor-text p{color:var(--text-dim); font-size:15px;}
+  .instructor-text .role{color:var(--amber); font-size:13px; font-weight:600; margin-bottom:8px; display:block;}
+
+  h2{
+    font-size:clamp(24px,3.5vw,32px);
+    font-weight:700;
+    margin-bottom:8px;
+    text-align:center;
+  }
+  .h2-sub{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:480px;
+    margin:0 auto 40px;
+  }
+
+  .learn-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  @media(max-width:600px){.learn-grid{grid-template-columns:1fr;}}
+  .learn-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:22px;
+  }
+  .learn-item .tag{
+    font-family:'Space Grotesk';
+    font-size:12px;
+    color:var(--signal);
+    letter-spacing:.5px;
+    margin-bottom:10px;
+    display:block;
+  }
+  .learn-item h4{font-size:17px; margin-bottom:6px; color:var(--paper);}
+  .learn-item p{font-size:14px; color:var(--text-dim);}
+
+  .price-card{
+    background:linear-gradient(160deg, var(--panel-2), var(--panel));
+    border:1px solid var(--amber-dim);
+    border-radius:18px;
+    padding:44px 32px;
+    text-align:center;
+    max-width:480px;
+    margin:0 auto;
+  }
+  .price-card .badge{
+    display:inline-block;
+    background:rgba(227,168,87,.12);
+    color:var(--amber);
+    font-size:12.5px;
+    font-weight:600;
+    padding:5px 14px;
+    border-radius:100px;
+    margin-bottom:18px;
+  }
+  .price-amount{
+    font-family:'Space Grotesk';
+    font-size:52px;
+    font-weight:700;
+    color:var(--paper);
+  }
+  .price-amount span{font-size:20px; color:var(--text-dim); font-weight:500;}
+  .price-desc{color:var(--text-dim); font-size:14px; margin:14px 0 28px;}
+  .price-list{
+    text-align:left;
+    list-style:none;
+    margin-bottom:30px;
+  }
+  .price-list li{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--paper);
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .price-list li:last-child{border-bottom:none;}
+  .price-list li::before{
+    content:"✓";
+    color:var(--signal);
+    font-weight:700;
+    flex-shrink:0;
+  }
+
+  .final-cta{
+    text-align:center;
+    background:radial-gradient(ellipse at center, rgba(227,168,87,.08), transparent 70%);
+    padding:80px 20px 90px;
+  }
+  .final-cta h2{margin-bottom:14px;}
+
+  .disclosure{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 20px 40px;
+    text-align:center;
+    font-size:12.5px;
+    color:#5B6472;
+  }
+  footer{
+    border-top:1px solid var(--line);
+    text-align:center;
+    padding:28px 20px;
+    font-size:12.5px;
+    color:#5B6472;
+  }
+
+  .sticky-cta{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    padding:12px 16px;
+    display:none;
+    z-index:50;
+  }
+  .sticky-cta a{
+    display:block;
+    background:var(--amber);
+    color:var(--ink);
+    text-align:center;
+    font-weight:700;
+    padding:13px;
+    border-radius:8px;
+    font-size:15px;
+  }
+  @media(max-width:640px){
+    .sticky-cta{display:block;}
+    body{padding-bottom:70px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker">🔴 লাইভ ওয়ার্কশপ শুরু হবে ৩১ জুলাই, রাত ৯টা (বাংলাদেশ সময়) — সিট সীমিত</div>
+
+<section class="hero">
+  <div class="eyebrow"><span class="dot"></span> লাইভ ইভেন্ট · ৩১ জুলাই ২০২৬</div>
+  <h1>AI ব্যবহার করে <span>ইনকাম আর কাজ</span> — দুটোই সহজ করুন</h1>
+  <p class="sub">খালিদ ফারহানের লাইভ AI ওয়ার্কশপে জেনে নিন এজেন্টিক AI টুলস, অটোমেশন আর বিজনেসে AI প্রয়োগ করে কীভাবে আয়ের পথ তৈরি করবেন — একদম শুরু থেকে।</p>
+  <a class="cta-btn" href="https://khalidfarhan.com/masterclass?ref=smart-digital" target="_blank" rel="noopener">সিট রিজার্ভ করুন →</a>
+  <span class="cta-sub">খালিদ ফারহানের অফিসিয়াল ওয়েবসাইটে যাবেন · নিরাপদ পেমেন্ট</span>
+
+  <div class="countdown-wrap">
+    <div class="countdown" id="countdown">
+      <div class="cd-box"><div class="n" id="cd-days">--</div><div class="l">দিন</div></div>
+      <div class="cd-box"><div class="n" id="cd-hours">--</div><div class="l">ঘণ্টা</div></div>
+      <div class="cd-box"><div class="n" id="cd-mins">--</div><div class="l">মিনিট</div></div>
+      <div class="cd-box"><div class="n" id="cd-secs">--</div><div class="l">সেকেন্ড</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="instructor-card">
+    <div class="instructor-avatar">KF</div>
+    <div class="instructor-text">
+      <span class="role">আপনার ইনস্ট্রাক্টর</span>
+      <h3>খালিদ ফারহান</h3>
+      <p>ডাবলিন-ভিত্তিক মার্কেটিং এজেন্সির প্রতিষ্ঠাতা। SEO, Google Ads, Meta Ads ও ওয়েব ডেভেলপমেন্ট নিয়ে কাজের দীর্ঘ অভিজ্ঞতা থেকে তিনি হাতে-কলমে দেখাবেন কীভাবে AI দিয়ে রিয়েল-লাইফ কাজ ও ইনকাম বাড়ানো যায়।</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <h2>ওয়ার্কশপে যা যা থাকছে</h2>
+  <p class="h2-sub">তত্ত্ব নয়, বাস্তবে ব্যবহারযোগ্য টুলস আর পদ্ধতি নিয়ে সাজানো একটি লাইভ সেশন</p>
+  <div class="learn-grid">
+    <div class="learn-item">
+      <span class="tag">০১ · ইনকাম</span>
+      <h4>AI দিয়ে আয়ের পথ</h4>
+      <p>AI ব্যবহার করে কীভাবে বাস্তবে ইনকাম জেনারেট করা যায় তার কার্যকর কৌশল।</p>
+    </div>
+    <div class="learn-item">
+      <span class="tag">০২ · টুলস</span>
+      <h4>এজেন্টিক AI টুলস</h4>
+      <p>নিজের কাজ অটোমেট করতে সবচেয়ে কার্যকর এজেন্টিক AI টুলসের পরিচিতি ও ব্যবহার।</p>
+    </div>
+    <div class="learn-item">
+      <span class="tag">০৩ · অটোমেশন</span>
+      <h4>দৈনন্দিন কাজের অটোমেশন</h4>
+      <p>রিপিটেটিভ কাজগুলো AI দিয়ে অটোমেট করে সময় বাঁচানোর প্র্যাকটিক্যাল পদ্ধতি।</p>
+    </div>
+    <div class="learn-item">
+      <span class="tag">০৪ · বিজনেস</span>
+      <h4>বিজনেসে AI প্রয়োগ</h4>
+      <p>ছোট-বড় বিজনেসে AI কীভাবে প্রতিযোগিতামূলক সুবিধা তৈরি করে দিতে পারে।</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <h2>একবারের বিনিয়োগ</h2>
+  <p class="h2-sub">লাইভ সেশন, সরাসরি প্রশ্ন করার সুযোগসহ</p>
+  <div class="price-card">
+    <span class="badge">সীমিত সিট</span>
+    <div class="price-amount">৳৯৫০<span> / সেশন</span></div>
+    <p class="price-desc">৩১ জুলাই, রাত ৯টা (বাংলাদেশ সময়) — লাইভ</p>
+    <ul class="price-list">
+      <li>সম্পূর্ণ লাইভ ওয়ার্কশপ অ্যাক্সেস</li>
+      <li>সরাসরি প্রশ্ন-উত্তরের সুযোগ</li>
+      <li>বাস্তব উদাহরণ ও হাতে-কলমে ডেমো</li>
+      <li>নির্দিষ্ট তারিখ ও সময়ে লাইভ অংশগ্রহণ</li>
+    </ul>
+    <a class="cta-btn" style="width:100%;" href="https://khalidfarhan.com/masterclass?ref=smart-digital" target="_blank" rel="noopener">এখনই সিট বুক করুন →</a>
+  </div>
+</section>
+
+<section class="final-cta">
+  <h2>সিট সংখ্যা সীমিত</h2>
+  <p class="h2-sub">৩১ জুলাইয়ের আগে রেজিস্ট্রেশন সম্পন্ন করুন</p>
+  <a class="cta-btn" href="https://khalidfarhan.com/masterclass?ref=smart-digital" target="_blank" rel="noopener">খালিদ ফারহানের সাইটে যান →</a>
+</section>
+
+<p class="disclosure">এই পেজটি খালিদ ফারহানের অফিসিয়াল ওয়ার্কশপ প্রমোট করছে একজন অ্যাফিলিয়েট পার্টনার হিসেবে। রেজিস্ট্রেশন ও পেমেন্ট সম্পন্ন হবে khalidfarhan.com-এ।</p>
+
+<footer>© ২০২৬ · এই পেজটি একটি স্বাধীন প্রচারণামূলক পেজ, খালিদ ফারহানের অফিসিয়াল ওয়েবসাইট নয়।</footer>
+
+<div class="sticky-cta">
+  <a href="https://khalidfarhan.com/masterclass?ref=smart-digital" target="_blank" rel="noopener">সিট বুক করুন — ৳৯৫০</a>
+</div>
+
+<script>
+  const target = new Date("2026-07-31T21:00:00+06:00").getTime();
+  function updateCountdown(){
+    const now = Date.now();
+    let diff = target - now;
+    if(diff < 0) diff = 0;
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+    document.getElementById('cd-days').textContent = d;
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  /* ---------------------------------------------------------
+     Facebook Pixel — replace YOUR_PIXEL_ID below with your own
+     pixel ID from Facebook Events Manager, then uncomment the
+     standard FB pixel base snippet from Events Manager here.
+     This enables retargeting / conversion tracking for your ads.
+     fbq('init', 'YOUR_PIXEL_ID');
+     fbq('track', 'PageView');
+  ------------------------------------------------------------ */
+</script>
+
+</body>
+</html>
